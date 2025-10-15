@@ -1,0 +1,7 @@
+const posts=[{id:1,title:"post one",body:"this is the body"},
+{id:2,title:"post two",body:"this is the body"},
+{id:3,title:"post three",body:"this is the body"},
+{id:4,title:"post four",body:"this is the body"},
+{id:5,title:"post five",body:"this is the body"}
+]
+module.exports=posts;

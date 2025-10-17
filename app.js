@@ -10,7 +10,8 @@ app.use(express.json()); // allow JSON body parsing
 app.use(cors({
   origin: 'http://localhost:3000', // your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 // Mount routes
 app.use('/posts', postRoutes);

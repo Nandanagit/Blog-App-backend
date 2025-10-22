@@ -10,5 +10,5 @@ router.post("/", authenticateJWT, createPost);
 router.get("/author/:author", authenticateJWT, getPostByAuthor);
 router.post("/update/:id", authenticateJWT, updatePost);
 router.delete("/delete/:id", authenticateJWT, deletePost);
-
+router.get("/postss", getPosts);
 module.exports=router;

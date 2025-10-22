@@ -6,6 +6,7 @@ const dotenv=require("dotenv");
 dotenv.config();
 const postRoutes = require('./routes/postroutes');
 const authRoutes = require('./routes/authroutes');
+const adminRoutes = require('./routes/adminroutes');
 app.use(express.json()); // allow JSON body parsing
 app.use(cors({
   origin: 'http://localhost:3000', // your frontend URL
@@ -16,6 +17,7 @@ app.use(cors({
 // Mount routes
 app.use('/posts', postRoutes);
 app.use('/auth', authRoutes);
+app.use('/admin', adminRoutes);
 const PORT = 7000;
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {

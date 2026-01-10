@@ -4,8 +4,8 @@ const { getPosts, getPostById,getPostByAuthor,updatePost,deletePost } = require(
 const { createPost } = require('../controllers/postcontroller');
 const authenticateJWT = require('../services/authMiddleware');
 
-router.get("/", authenticateJWT, getPosts);
-router.get("/id/:id",authenticateJWT, getPostById);
+router.get("/", getPosts);
+router.get("/id/:id", getPostById);
 router.post("/", authenticateJWT, createPost);
 router.get("/author/:author", authenticateJWT, getPostByAuthor);
 router.post("/update/:id", authenticateJWT, updatePost);

@@ -2,8 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
-const dotenv=require("dotenv");
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = require('dotenv');
+  dotenv.config();
+}
 const postRoutes = require('./routes/postroutes');
 const authRoutes = require('./routes/authroutes');
 const adminRoutes = require('./routes/adminroutes');

@@ -18,11 +18,13 @@ app.use(cors({
 app.use('/posts', postRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
-const PORT = 7000;
-mongoose.connect(process.env.MONGO_URL)
-    .then(() => {
-        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    })
-    .catch((error) => {
-        console.error('Error connecting to MongoDB:', error);
-    });
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
+
+module.exports = app;

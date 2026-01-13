@@ -49,7 +49,7 @@ const requestPasswordReset = async (req, res) => {
       const resetToken = generateToken({ userId: user._id }, '15m');
   
       // Example: construct password reset link
-      const resetLink = `http://localhost:3000/admin/newpass?token=${resetToken}`;
+      const resetLink = ` https://blog-app-bynandana.vercel.app/admin/newpass?token=${resetToken}`;
 
       const html = `
       <h2>Password Reset Request</h2>

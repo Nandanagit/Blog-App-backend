@@ -13,13 +13,13 @@ app.use(express.json()); // allow JSON body parsing
 
 // CORS configuration
 const allowedOrigins = [
-  'https://blog-app-bynandana.vercel.app',
+  'https://nandana-blog.vercel.app/',
   'http://localhost:3000' // for local development
 ];
 
 app.use(cors({
   origin: [
-    'https://blog-app-bynandana.vercel.app',
+    'https://nandana-blog.vercel.app/',
     'http://localhost:3000'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

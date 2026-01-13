@@ -13,21 +13,39 @@ app.use(express.json()); // allow JSON body parsing
 
 // CORS configuration
 const allowedOrigins = [
-  'https://nandana-blog.vercel.app/',
+  'https://nandana-blog.vercel.app',
   'http://localhost:3000' // for local development
 ];
 
-app.use(cors({
-  origin: [
-    'https://nandana-blog.vercel.app/',
-    'http://localhost:3000'
-  ],
+// Handle preflight requests
+app.options('*', cors({
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// app.options('*', cors());
+// Apply CORS to all routes
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Normalize the origin by removing trailing slashes
+    const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
+    
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
+    } else {
+      console.log('CORS blocked for origin:', origin);
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Content-Length', 'Authorization']
+}));
 
 
 // Root route

@@ -11,7 +11,7 @@ const authRoutes = require('./routes/authroutes');
 const adminRoutes = require('./routes/adminroutes');
 app.use(express.json()); // allow JSON body parsing
 app.use(cors({
-  origin: 'http://localhost:3000', // your frontend URL
+  origin: 'https://blog-app-bynandana.vercel.app/home', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']

@@ -25,27 +25,27 @@ app.options('*', cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Apply CORS to all routes
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+// // Apply CORS to all routes
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     // Allow requests with no origin (like mobile apps or curl requests)
+//     if (!origin) return callback(null, true);
     
-    // Normalize the origin by removing trailing slashes
-    const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
+//     // Normalize the origin by removing trailing slashes
+//     const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
     
-    if (allowedOrigins.includes(normalizedOrigin)) {
-      return callback(null, true);
-    } else {
-      console.log('CORS blocked for origin:', origin);
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Content-Length', 'Authorization']
-}));
+//     if (allowedOrigins.includes(normalizedOrigin)) {
+//       return callback(null, true);
+//     } else {
+//       console.log('CORS blocked for origin:', origin);
+//       return callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   credentials: true,
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   exposedHeaders: ['Content-Length', 'Authorization']
+// }));
 
 
 // Root route

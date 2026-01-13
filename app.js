@@ -10,12 +10,41 @@ const postRoutes = require('./routes/postroutes');
 const authRoutes = require('./routes/authroutes');
 const adminRoutes = require('./routes/adminroutes');
 app.use(express.json()); // allow JSON body parsing
+
+// CORS configuration
+const allowedOrigins = [
+  'https://blog-app-bynandana.vercel.app',
+  'http://localhost:3000' // for local development
+];
+
 app.use(cors({
-  origin: 'https://blog-app-bynandana.vercel.app/', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Root route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Welcome to the Blog API',
+    endpoints: {
+      auth: '/auth',
+      posts: '/posts',
+      admin: '/admin'
+    }
+  });
+});
+
 // Mount routes
 app.use('/posts', postRoutes);
 app.use('/auth', authRoutes);

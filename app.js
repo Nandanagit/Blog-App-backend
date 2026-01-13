@@ -17,20 +17,14 @@ const allowedOrigins = [
   'http://localhost:3000' // for local development
 ];
 
-// Handle preflight requests
-app.options('*', cors({
+// Apply CORS to all routes (handles preflight automatically)
+app.use(cors({
   origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// // Apply CORS to all routes
-// app.use(cors({
-//   origin: function (origin, callback) {
-//     // Allow requests with no origin (like mobile apps or curl requests)
-//     if (!origin) return callback(null, true);
-    
 //     // Normalize the origin by removing trailing slashes
 //     const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
     
@@ -65,13 +59,29 @@ app.get('/', (req, res) => {
 app.use('/posts', postRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
+
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) return;
+
+  if (!process.env.MONGO_URL) {
+    console.error('MONGO_URL environment variable is not set');
+    return;
+  }
+
+  await mongoose.connect(process.env.MONGO_URL);
+  isConnected = true;
+};
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
     console.error('Error connecting to MongoDB:', error);
-  });
+    res.status(500).json({ message: 'Database connection error' });
+  }
+});
 
 module.exports = app;
